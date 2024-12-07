@@ -1,0 +1,65 @@
+Steps to Build Your Chrome Extension
+1. Create the File Structure
+You'll need the following files:
+
+manifest.json: The extension's configuration.
+content.js: The script that runs on the target website to modify the DOM.
+Your replacement image (e.g., prank-image.png).
+2. Write the manifest.json
+This file tells Chrome what your extension does and what permissions it needs. Here's an example:
+
+json
+Copy code
+{
+  "manifest_version": 3,
+  "name": "Image Prank Extension",
+  "version": "1.0",
+  "description": "Replace a specific image on a website with a custom one.",
+  "permissions": ["scripting"],
+  "host_permissions": ["*://specific-website.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://specific-website.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
+Replace specific-website.com with the actual domain.
+
+3. Write the content.js
+This script finds the image and replaces its src attribute.
+
+javascript
+Copy code
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+  // Replace this selector with the one for the target image
+  const targetImage = document.querySelector("img");
+
+  if (targetImage) {
+    targetImage.src = chrome.runtime.getURL("prank-image.png");
+  }
+});
+4. Add Your Replacement Image
+Put your custom image (e.g., prank-image.png) in the extension folder.
+
+5. Load the Extension in Chrome
+Go to chrome://extensions/.
+Enable "Developer mode" (top-right corner).
+Click "Load unpacked."
+Select the folder where you've saved the extension files.
+6. Test It
+Visit the target website, and the logo should now be replaced with your custom image.
+
+Notes & Tips
+Selector Specificity: If the website has multiple <img> tags, refine the selector in content.js to target the specific logo. For instance, if the logo has a class name site-logo, use:
+
+javascript
+Copy code
+const targetImage = document.querySelector("img.site-logo");
+Local Changes Only: This only modifies how the website appears on your local machine. No changes are made to the website itself.
+
+Undo the Prank: To undo the prank, simply disable or remove the extension.
