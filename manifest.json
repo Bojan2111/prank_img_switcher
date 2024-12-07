@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Image Prank Extension",
+  "version": "1.0",
+  "description": "Replace a specific image on a website with a custom one.",
+  "permissions": ["scripting"],
+  "host_permissions": ["*://specific-website.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://specific-website.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
