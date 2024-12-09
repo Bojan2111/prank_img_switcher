@@ -3,10 +3,10 @@
   "name": "Image Prank Extension",
   "version": "1.0",
   "description": "Replace a specific image on a website with a custom one.",
-  "host_permissions": ["*://specific-website.com/*"],
+  "host_permissions": ["https://[URL:PORT || website.com || *.website.com]/*"],
   "content_scripts": [
     {
-      "matches": ["*://specific-website.com/*"],
+      "matches": ["https://[URL:PORT || website.com || *.website.com]/*"],
       "js": ["content.js"]
     }
   ]
